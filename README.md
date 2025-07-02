@@ -6,6 +6,8 @@ In development. Some functionality may not yet be working.  If you find this use
 
 4AFKKNFaCuuLv1BtirNDqqbRirwxV6MhoAtbcB9fmso3gqRe3WW6dthfcd8Rym5dqbQBT1pDMmwRtjchyzCzbCKcMkYnpRp
 
+## Usage
+
 ```
 // main.rs:
 
@@ -49,6 +51,8 @@ fn create_nolimit(n_players: usize) -> Result<State, String> {
     )
 }
 ```
+
+Running the main executable currently just briefly tests the API:
 
 ```
 cargo build
