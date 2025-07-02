@@ -1,8 +1,54 @@
 # pokerkit_rust
 
-Rust port of Juho Kims Python pokerkit (https://github.com/uoftcprg/pokerkit/tree/main).  Have not fully tested this yet and some functionality may not yet be working.  If you find this useful please consider donating some XMR to: 
+Rust port of Juho Kims Python package pokerkit (https://github.com/uoftcprg/pokerkit/tree/main).  
+
+In development. Some functionality may not yet be working.  If you find this useful please consider donating some XMR to: 
 
 4AFKKNFaCuuLv1BtirNDqqbRirwxV6MhoAtbcB9fmso3gqRe3WW6dthfcd8Rym5dqbQBT1pDMmwRtjchyzCzbCKcMkYnpRp
+
+```
+// main.rs:
+
+use std::collections::BTreeMap;
+use pokerkit::games::NoLimitTexasHoldem;
+use pokerkit::state::{Automation, Mode, State};
+
+/// Creates a new no-limit Texas Hold'em game state.
+fn create_nolimit(n_players: usize) -> Result<State, String> {
+    let automations = vec![
+        Automation::AntePosting,
+        Automation::BetCollection,
+        Automation::BlindOrStraddlePosting,
+        Automation::HoleDealing, // Automate the dealing
+        Automation::HoleCardsShowingOrMucking,
+        Automation::HandKilling,
+        Automation::ChipsPushing,
+        Automation::ChipsPulling,
+    ];
+
+    let mut blinds = BTreeMap::new();
+    blinds.insert(0, 4); // Small blind
+    blinds.insert(1, 8); // Big blind
+
+    let mut starting_stacks = BTreeMap::new();
+    for i in 0..n_players {
+        starting_stacks.insert(i, 800);
+    }
+    
+    let antes = BTreeMap::new();
+
+    NoLimitTexasHoldem::create_state(
+        &automations,
+        true,
+        antes,
+        blinds,
+        8,
+        starting_stacks,
+        n_players,
+        Mode::CashGame,
+    )
+}
+```
 
 ```
 cargo build
